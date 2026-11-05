@@ -64,15 +64,14 @@ def update_student(
     )
 
     cursor = db.cursor()
-    # INTENTIONAL BUG: Passing existing["email"] instead of updated_email
-    # causing email updates to fail.
+    # Corrected update query: updated_email is now properly bound
     cursor.execute(
         """
         UPDATE students
         SET name = ?, age = ?, email = ?, course = ?
         WHERE student_id = ?
         """,
-        (updated_name, updated_age, existing["email"], updated_course, student_id),
+        (updated_name, updated_age, updated_email, updated_course, student_id),
     )
     db.commit()
     return get_student_by_id(db, student_id)

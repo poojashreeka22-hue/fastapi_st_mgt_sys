@@ -134,15 +134,15 @@ def test_api_update_student_invalid_values(client, db_conn, invalid_payload):
 
 
 # -------------------------------------------------------------
-# 6. Database CRUD update fields (name, age, course): 21 tests (ALL PASS)
+# 6. Database CRUD update fields (name, age, course): 24 tests (ALL PASS)
 # -------------------------------------------------------------
 @pytest.mark.parametrize(
     "sid,new_name,new_age,new_course",
     [
         (1000 + i, f"CRUD Name {i}", 21 + (i % 20), f"CRUD Course {i}")
-        for i in range(1, 22)
+        for i in range(1, 25)
     ],
-    ids=[f"crud_update_multi_{i}" for i in range(1, 22)],
+    ids=[f"crud_update_multi_{i}" for i in range(1, 25)],
 )
 def test_crud_update_multi_fields(db_conn, sid, new_name, new_age, new_course):
     crud.create_student(
@@ -259,24 +259,4 @@ def test_crud_update_student_email_direct(db_conn):
     assert updated is not None
     assert updated["email"] == "frank_new@database.io"
 
-
-# -------------------------------------------------------------
-# 8. Pending Feature Tests: EXACTLY 3 TESTS
-# -------------------------------------------------------------
-@pytest.mark.skip(reason="Pending feature: Student GPA / academic performance update")
-def test_pending_update_student_gpa():
-    """Pending implementation of student GPA calculation and update."""
-    pass
-
-
-@pytest.mark.skip(reason="Pending feature: Student enrollment status update (Active/Probation/Graduated)")
-def test_pending_update_student_status():
-    """Pending implementation of student enrollment status lifecycle update."""
-    pass
-
-
-@pytest.mark.skip(reason="Pending feature: Student faculty advisor assignment update")
-def test_pending_update_student_advisor():
-    """Pending implementation of academic advisor assignment update."""
-    pass
 
